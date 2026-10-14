@@ -32,13 +32,12 @@ class _VisitorPassScreenState extends State<VisitorPassScreen> {
               TextField(controller: _purpose, decoration: InputDecoration(labelText: 'Purpose')),
               SizedBox(height: 12),
               ElevatedButton(onPressed: _createPass, child: Text('Create Pass')),
-              SizedBox(height: 24),
+              SizedBox(height: 20),
               if (_passCode != null) ...[
-                Text('Pass Code:'),
-                SizedBox(height: 8),
-                QrImage(data: _passCode!, size: 200),
-                SizedBox(height: 8),
+                Text('Pass Code'),
                 Text(_passCode!),
+                SizedBox(height: 12),
+                QrImage(data: _passCode!, version: QrVersions.auto, size: 220),
               ]
             ],
           ),

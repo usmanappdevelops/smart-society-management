@@ -15,10 +15,13 @@ class HomeScreen extends StatelessWidget {
             ),
             SizedBox(height: 12),
             ElevatedButton(
-              onPressed: () {
-                // TODO: navigate to guard QR scanner screen
-              },
-              child: Text('Guard - Scan Visitor'),
+              onPressed: () {},
+              child: Text('Scan Visitor QR'),
+            ),
+            SizedBox(height: 12),
+            ElevatedButton(
+              onPressed: () {},
+              child: Text('Complaints'),
             )
           ],
         ),

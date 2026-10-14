@@ -1,8 +1,34 @@
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+import '../services/api_service.dart';
+
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final emailController = TextEditingController(text: 'admin@smartsociety.com');
+  final passwordController = TextEditingController(text: 'admin123');
+
+  bool loading = false;
+
+  void login() async {
+    setState(() => loading = true);
+    try {
+      final result = await ApiService.login(emailController.text, passwordController.text);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Login successful')),
+      );
+      Navigator.pushReplacementNamed(context, '/home');
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Login failed')),
+      );
+    } finally {
+      setState(() => loading = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +42,8 @@ class LoginScreen extends StatelessWidget {
             TextField(controller: passwordController, decoration: InputDecoration(labelText: 'Password'), obscureText: true),
             SizedBox(height: 12),
             ElevatedButton(
-              onPressed: () {
-                // TODO: call backend auth and save token
-                Navigator.pushReplacementNamed(context, '/home');
-              },
-              child: Text('Login'),
+              onPressed: loading ? null : login,
+              child: loading ? CircularProgressIndicator() : Text('Login'),
             )
           ],
         ),

@@ -1,32 +1,35 @@
-import React, { useState } from 'react'
-import api from '../api'
+import { useEffect, useState } from 'react';
+import api from '../api';
 
 export default function Complaints() {
-  const [complaints, setComplaints] = useState([])
+  const [complaints, setComplaints] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const load = async () => {
       try {
-        const token = localStorage.getItem('token')
-        const resp = await api.get('/complaints', { headers: { Authorization: `Bearer ${token}` } })
-        setComplaints(resp.data.data)
-      } catch (err) {
-        console.error(err)
+        const token = localStorage.getItem('token');
+        const response = await api.get('/complaints', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setComplaints(response.data.data || []);
+      } catch (error) {
+        console.error(error);
       }
-    }
-    load()
-  }, [])
+    };
+
+    load();
+  }, []);
 
   return (
     <div>
       <h2>Complaints</h2>
       <ul>
-        {complaints.map(c => (
-          <li key={c.id}>
-            <strong>{c.title}</strong> — {c.category} — {c.status}
+        {complaints.map((complaint) => (
+          <li key={complaint.id}>
+            <strong>{complaint.title}</strong> — {complaint.category} — {complaint.status}
           </li>
         ))}
       </ul>
     </div>
-  )
+  );
 }

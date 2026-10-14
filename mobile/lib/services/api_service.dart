@@ -26,7 +26,7 @@ class ApiService {
 
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
-      return body['data'] as List<dynamic>;
+      return body['data'] ?? [];
     }
     throw Exception('Load visitors failed');
   }

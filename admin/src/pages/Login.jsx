@@ -1,37 +1,39 @@
-import React, { useState } from 'react'
-import api from '../api'
+import { useState } from 'react';
+import api from '../api';
 
 export default function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [message, setMessage] = useState(null)
+  const [email, setEmail] = useState('admin@smartsociety.com');
+  const [password, setPassword] = useState('admin123');
+  const [message, setMessage] = useState('');
 
-  const submit = async (e) => {
-    e.preventDefault()
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
     try {
-      const resp = await api.post('/auth/login', { email, password })
-      localStorage.setItem('token', resp.data.token)
-      setMessage('Login successful — token saved in localStorage')
-    } catch (err) {
-      setMessage(err?.response?.data?.message || 'Login failed')
+      const response = await api.post('/auth/login', { email, password });
+      localStorage.setItem('token', response.data.token);
+      setMessage('Login successful');
+      window.location.href = '/dashboard';
+    } catch (error) {
+      setMessage(error?.response?.data?.message || 'Login failed');
     }
-  }
+  };
 
   return (
-    <div style={{ maxWidth: 420 }}>
+    <div style={{ maxWidth: '420px', margin: '40px auto' }}>
       <h2>Admin Login</h2>
-      <form onSubmit={submit}>
+      <form onSubmit={handleSubmit}>
         <div>
           <label>Email</label>
-          <input value={email} onChange={e => setEmail(e.target.value)} />
+          <input value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div>
           <label>Password</label>
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
         <button type="submit">Login</button>
       </form>
       {message && <p>{message}</p>}
     </div>
-  )
+  );
 }

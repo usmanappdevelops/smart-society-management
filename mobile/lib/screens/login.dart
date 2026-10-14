@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-
 import '../services/api_service.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController(text: 'admin@smartsociety.com');
   final passwordController = TextEditingController(text: 'admin123');
-
   bool loading = false;
 
   void login() async {
@@ -18,12 +16,12 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       final result = await ApiService.login(emailController.text, passwordController.text);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login successful')),
+        const SnackBar(content: Text('Login successful')),
       );
       Navigator.pushReplacementNamed(context, '/home');
-    } catch (e) {
+    } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login failed')),
+        const SnackBar(content: Text('Login failed')),
       );
     } finally {
       setState(() => loading = false);
@@ -33,18 +31,18 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login')),
+      appBar: AppBar(title: const Text('Login')),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(controller: emailController, decoration: InputDecoration(labelText: 'Email')),
-            TextField(controller: passwordController, decoration: InputDecoration(labelText: 'Password'), obscureText: true),
-            SizedBox(height: 12),
+            TextField(controller: emailController, decoration: const InputDecoration(labelText: 'Email')),
+            TextField(controller: passwordController, decoration: const InputDecoration(labelText: 'Password'), obscureText: true),
+            const SizedBox(height: 12),
             ElevatedButton(
               onPressed: loading ? null : login,
-              child: loading ? CircularProgressIndicator() : Text('Login'),
-            )
+              child: loading ? const CircularProgressIndicator() : const Text('Login'),
+            ),
           ],
         ),
       ),

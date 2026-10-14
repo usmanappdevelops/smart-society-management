@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'screens/login.dart';
-import 'screens/home.dart';
-import 'screens/visitor_pass.dart';
 
 void main() {
-  runApp(SmartSocietyApp());
+  runApp(const SmartSocietyApp());
 }
 
 class SmartSocietyApp extends StatelessWidget {
+  const SmartSocietyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,9 +14,9 @@ class SmartSocietyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue),
       initialRoute: '/login',
       routes: {
-        '/login': (_) => LoginScreen(),
-        '/home': (_) => HomeScreen(),
-        '/visitor': (_) => VisitorPassScreen(),
+        '/login': (context) => LoginScreen(),
+        '/home': (context) => HomeScreen(),
+        '/visitor': (context) => VisitorPassScreen(),
       },
     );
   }
